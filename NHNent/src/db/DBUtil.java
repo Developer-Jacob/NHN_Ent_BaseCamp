@@ -1,6 +1,8 @@
 package db;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
@@ -14,6 +16,15 @@ public class DBUtil {
 						String time = fomatter.format(date);
 						return time;
 			}
+			public static void close(Statement stmt){
+						if(stmt != null){
+									try {
+												stmt.close();
+									} catch (SQLException e) {
+												e.printStackTrace();
+									}
+						}
+			}
 			public static void close(Connection conn){
 						if(conn != null){
 									try {
@@ -23,10 +34,18 @@ public class DBUtil {
 									}
 						}
 			}
-			public static void close(Statement stmt){
-						if(stmt != null){
+			public static void close(PreparedStatement pstmt){
+						if(pstmt != null){
 									try {
-												stmt.close();
+												pstmt.close();
+									} catch (SQLException e) {
+												e.printStackTrace();
+									}
+						}
+			}public static void close(ResultSet rs){
+						if(rs != null){
+									try {
+												rs.close();
 									} catch (SQLException e) {
 												e.printStackTrace();
 									}
