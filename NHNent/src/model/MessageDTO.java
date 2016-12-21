@@ -1,11 +1,19 @@
 package model;
 
 //DB 테이블에 값 전소을 위한 클래스
-public class Message {
+public class MessageDTO {
 			private int id;
 			private String user;
 			private String password;
 			private String contents;
+			private String time;
+			public String getTime() {
+						return time;
+			}
+
+			public void setTime(String time) {
+						this.time = time;
+			}
 
 			public int getId() {
 						return id;
