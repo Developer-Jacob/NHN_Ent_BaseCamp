@@ -14,12 +14,8 @@ public class ConnectionProvider {
 									Class.forName("com.mysql.jdbc.Driver");
 									conn = DriverManager.getConnection(url, id, password);
 						} catch (ClassNotFoundException e) {
-									// TODO Auto-generated catch block
-									System.out.println("class");
 									e.printStackTrace();
 						} catch (SQLException e) {
-									// TODO Auto-generated catch block
-									System.out.println("sql");
 									e.printStackTrace();
 						}
 						return conn;

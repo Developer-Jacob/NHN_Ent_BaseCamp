@@ -94,20 +94,32 @@ public class DAO {
 									DBUtil.close(rs);
 						}
 			}
-			public void update(Message msg){
+			public void update(Connection conn, Message msg) throws SQLException{
 						PreparedStatement pstmt = null;
 						try{
+									String sql = "update "
+															+DBKeyword.Table_GuestBook
+															+" set "
+															+DBKeyword.Column_Content
+															+" = ?"
+															+" where "
+															+DBKeyword.Column_id
+															+" = ?";
+									pstmt = conn.prepareStatement(sql);
+									pstmt.setString(1, msg.getContents());
+									pstmt.setInt(2, msg.getId());
+									pstmt.executeUpdate();
 						}finally {
-									
+									DBUtil.close(pstmt);
 						}
 			}
 			public void delete(Connection conn, int msgId) throws SQLException{
 						PreparedStatement pstmt = null;
 						try{
-									String sql = "delete from"
+									String sql = "delete from "
 															+DBKeyword.Table_GuestBook
-															+"where"
-															+DBKeyword.Column_id+"= ?";
+															+" where "
+															+DBKeyword.Column_id+" = ? ";
 									pstmt = conn.prepareStatement(sql);
 									pstmt.setInt(1, msgId);
 									pstmt.executeUpdate();
