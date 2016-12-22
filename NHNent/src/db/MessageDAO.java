@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import javafx.css.PseudoClass;
 import model.MessageDTO;
 
 //DB의 CRUD기능을 위한 클래스
@@ -27,19 +28,22 @@ public class MessageDAO {
 						try {
 									String sql = "insert into "+DBKeyword.Table_GuestBook+" ( "
 															+ DBKeyword.Column_User+" , "
+															+ DBKeyword.Column_Title+" , "
 															+ DBKeyword.Column_Content+" , "
 															+ DBKeyword.Column_Time+" , "
 															+ DBKeyword.Column_Password
-															+ " ) values (?,?,?,?) ";
+															+ " ) values (?,?,?,?,?) ";
 									pstmt = conn.prepareStatement(sql);
 									//user
 									pstmt.setString(1, msg.getUser());
+									//title
+									pstmt.setString(2, msg.getTitle());
 									//content
-									pstmt.setString(2, msg.getContents());
+									pstmt.setString(3, msg.getContents());
 									//time
-									pstmt.setString(3, DBUtil.getTime());
+									pstmt.setString(4, DBUtil.getTime());
 									//psw
-									pstmt.setString(4, msg.getPassword());
+									pstmt.setString(5, msg.getPassword());
 									pstmt.executeUpdate();
 						}
 						catch(SQLException e){ 
@@ -87,7 +91,7 @@ public class MessageDAO {
 									String sql = " select * from "
 															+DBKeyword.Table_GuestBook
 															+" where "
-															+DBKeyword.Column_id+" = ? ";
+															+DBKeyword.Column_Id+" = ? ";
 									pstmt = conn.prepareStatement(sql);
 									pstmt.setInt(1, msgId);
 									rs = pstmt.executeQuery();
@@ -113,7 +117,7 @@ public class MessageDAO {
 															+DBKeyword.Column_Time
 															+" = ? "
 															+" where "
-															+DBKeyword.Column_id
+															+DBKeyword.Column_Id
 															+" = ? ";
 									pstmt = conn.prepareStatement(sql);
 									pstmt.setString(1, msg.getContents());
@@ -130,7 +134,7 @@ public class MessageDAO {
 									String sql = " delete from "
 															+DBKeyword.Table_GuestBook
 															+" where "
-															+DBKeyword.Column_id+" = ? ";
+															+DBKeyword.Column_Id+" = ? ";
 									pstmt = conn.prepareStatement(sql);
 									pstmt.setInt(1, msgId);
 									pstmt.executeUpdate();
@@ -139,13 +143,14 @@ public class MessageDAO {
 						}
 			}
 			public MessageDTO makeMessage(ResultSet rs) throws SQLException{
-						MessageDTO msg = new MessageDTO();
 						
-						msg.setId(rs.getInt(DBKeyword.Column_id));
-						msg.setUser(rs.getString(DBKeyword.Column_User));
-						msg.setContents(rs.getString(DBKeyword.Column_Content));
-						msg.setPassword(rs.getString(DBKeyword.Column_Password));
-						msg.setTime(rs.getString(DBKeyword.Column_Time));
+						String title = rs.getString(DBKeyword.Column_Title);
+						int id =rs.getInt(DBKeyword.Column_Id);
+						String user = rs.getString(DBKeyword.Column_User);
+						String content = rs.getString(DBKeyword.Column_Content);
+						String password = rs.getString(DBKeyword.Column_Password);
+						String time = rs.getString(DBKeyword.Column_Time);
+						MessageDTO msg = new MessageDTO(id,user,password,title,content,time);
 						return msg;
 			}
 }

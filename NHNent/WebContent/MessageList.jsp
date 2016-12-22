@@ -9,21 +9,31 @@
 <title>MessageList</title>
 </head>
 <body>
-	<%
+	<table border="1">
+		<tr align="center" height="20">
+			<td width="70">번호</td>
+			<td width="100">제목</td>
+			<td width="100">작성자</td>
+			<td width="100">시간</td>
+		</tr>
+		<%
 		ArrayList<MessageDTO> list = (ArrayList<MessageDTO>)request.getAttribute("list");
 		if(list!=null){
 					for(MessageDTO dto : list){
 		%>
-		<%=dto.getUser()%>
-		<%=dto.getContents()%>
-		<%=dto.getTime()%>
+		<tr align="center">
+			<td><%=dto.getId() %></td>
+			<td ><%=dto.getTitle() %></td>
+			<td><%=dto.getUser()%></td>
+			<td><%=dto.getTime()%></td>
+		</tr>
 		<%
 					}
-					%>
-					<br>
-					<%
 		}
 	%>
-	
+	</table>
+	<p>
+		<input type = "button" value="글쓰기" onclick="location.href='input.do'">
+	</p>
 </body>
 </html>

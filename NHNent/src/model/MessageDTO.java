@@ -5,8 +5,38 @@ public class MessageDTO {
 			private int id;
 			private String user;
 			private String password;
+			private String title;
 			private String contents;
 			private String time;
+			
+			
+			public MessageDTO(String user, String password, String title, String contents) {
+						this.user = user;
+						this.password = password;
+						this.title = title;
+						this.contents = contents;
+			}
+			
+
+			public MessageDTO(int id, String user, String password, String title, String contents, String time) {
+						super();
+						this.id = id;
+						this.user = user;
+						this.password = password;
+						this.title = title;
+						this.contents = contents;
+						this.time = time;
+			}
+
+
+			public String getTitle() {
+						return title;
+			}
+
+			public void setTitle(String title) {
+						this.title = title;
+			}
+
 			public String getTime() {
 						return time;
 			}

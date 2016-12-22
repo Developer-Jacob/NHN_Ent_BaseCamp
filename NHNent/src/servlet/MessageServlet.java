@@ -18,14 +18,14 @@ import model.MessageDTO;
 /**
  * Servlet implementation class Controller
  */
-@WebServlet("/Message")
-public class Servlet extends HttpServlet {
+//@WebServlet("/Message")
+public class MessageServlet extends HttpServlet {
 			private static final long serialVersionUID = 1L;
 
 			/**
 			 * @see HttpServlet#HttpServlet()
 			 */
-			public Servlet() {
+			public MessageServlet() {
 						super();
 						// TODO Auto-generated constructor stub
 			}
@@ -52,16 +52,38 @@ public class Servlet extends HttpServlet {
 
 			private void processRequest(HttpServletRequest request, HttpServletResponse response)
 									throws ServletException, IOException {
-						String type = request.getParameter("type");
 						request.setCharacterEncoding("UTF-8");
 						Connection conn = ConnectionProvider.getConnection();
 						MessageDAO dao = MessageDAO.getInstance();
 						String uri = request.getRequestURI();
-						ArrayList<MessageDTO> msgList = dao.select_AllList(conn);
-						request.setAttribute("list", msgList);
-						RequestDispatcher requstDispatcher = request.getRequestDispatcher("/MessageListForm.jsp");
-						requstDispatcher.forward(request, response);
-						ConnectionProvider.close(conn);
+						System.out.println(uri);
+						if(uri.indexOf("input.do")!=-1){
+									System.out.println("input.do");
+									RequestDispatcher requstDispatcher = request.getRequestDispatcher("/MessageInput.jsp");
+									requstDispatcher.forward(request, response);
+									ConnectionProvider.close(conn);
+						}else if(uri.indexOf("list.do")!=-1){
+									System.out.println("list.do");
+									ArrayList<MessageDTO> msgList = dao.select_AllList(conn);
+									request.setAttribute("list", msgList);
+									RequestDispatcher requstDispatcher = request.getRequestDispatcher("/MessageList.jsp");
+									requstDispatcher.forward(request, response);
+									ConnectionProvider.close(conn);
+						}else if(uri.indexOf("complete.do")!=-1){
+									String user = request.getParameter("user");
+									String password = request.getParameter("password");
+									String title = request.getParameter("title");
+									String contents = request.getParameter("contents");
+									MessageDTO msg = new MessageDTO(user, password, title, contents);
+									dao.insert(conn, msg);
+									RequestDispatcher requstDispatcher = request.getRequestDispatcher("/MessageList.jsp");
+									requstDispatcher.forward(request, response);
+						}
+						else{
+									
+									
+						}
+						
 			}
 
 }

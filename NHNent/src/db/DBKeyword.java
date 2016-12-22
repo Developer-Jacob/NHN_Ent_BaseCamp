@@ -6,5 +6,6 @@ public class DBKeyword {
 			public final static String Column_Password = "password";
 			public final static String Column_Time = "time";
 			public final static String Column_Content= "content";
-			public final static String Column_id="id";
+			public final static String Column_Id="id";
+			public final static String Column_Title="title";
 }
