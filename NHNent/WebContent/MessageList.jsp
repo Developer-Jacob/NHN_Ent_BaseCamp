@@ -5,16 +5,17 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>MessageList</title>
 </head>
 <body>
-	<table border="1">
+	<table border="5" width="500">
 		<tr align="center" height="20">
-			<td width="70">번호</td>
-			<td width="100">제목</td>
-			<td width="100">작성자</td>
-			<td width="100">시간</td>
+			<td >번호</td>
+			<td >제목</td>
+			<td >작성자</td>
+			<td >시간</td>
 		</tr>
 		<%
 		ArrayList<MessageDTO> list = (ArrayList<MessageDTO>)request.getAttribute("list");
@@ -23,7 +24,7 @@
 		%>
 		<tr align="center">
 			<td><%=dto.getId() %></td>
-			<td ><%=dto.getTitle() %></td>
+			<td ><a href="content.do?id=<%=dto.getId()%>"> <%=dto.getTitle() %></a></td>
 			<td><%=dto.getUser()%></td>
 			<td><%=dto.getTime()%></td>
 		</tr>

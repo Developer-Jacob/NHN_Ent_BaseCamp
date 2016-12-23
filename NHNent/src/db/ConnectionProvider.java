@@ -22,7 +22,9 @@ public class ConnectionProvider {
 			}
 			public static void close(Connection conn){
 						try {
-									conn.close();
+									if(conn!=null){
+												conn.close();
+									}
 						} catch (SQLException e) {
 									// TODO Auto-generated catch block
 									e.printStackTrace();

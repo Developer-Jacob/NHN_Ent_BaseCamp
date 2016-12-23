@@ -16,6 +16,16 @@
 			document.forms[0].user.focus();
 			return false;
 		}
+		if (user.match(/^(\w+)@(\w+)[.](\w+)$/ig) == null) {
+			alert('이메일 형식(아이디@도메인.com)으로 입력하세요');
+			document.forms[0].user.focus();
+			return false;
+		}
+		if (user == null || user == "") {
+			alert("이메일을 입력하세요.");
+			document.forms[0].user.focus();
+			return false;
+		}
 		if (password == null || password == "") {
 			alert("비밀번호를 입력하세요.");
 			document.forms[0].user.focus();
@@ -31,25 +41,40 @@
 			document.forms[0].user.focus();
 			return false;
 		}
+		alert("저장 되었습니다.");
 	}
 </script>
 <title>Input Form</title>
 </head>
 <body>
-	<form action=complete.do method="post" onsubmit="return formCheck()">
+	<form action=insert.do method="post" onsubmit="return formCheck()">
+		<table border="5" width="500">
+			<tr align="center">
+				<td colspan="2">글쓰기</td>
+			</tr>
+			<tr align="center">
+				<td>이메일주소</td>
+				<td><input style="width: 97%; height: 100%" type="text"
+					name="user" value="${param.user}"></td>
+			</tr>
+			<tr align="center">
+				<td>비밀번호</td>
+				<td><input style="width: 97%; height: 100%" type="password"
+					name="password" value="${param.password}"></td>
+			</tr>
+			<tr align="center">
+				<td>제목</td>
+				<td><input style="width: 97%; height: 100%;" type="text"
+					name="title" value="${param.title}"></td>
+			</tr>
+			<tr align="center">
+				<td height="300" colspan="2"><textarea
+						style="width: 98%; height: 100%" name="content">${param.content}</textarea></td>
+			</tr>
+		</table>
 		<p>
-			Email address : <input type="text" name="user" value="${param.user}">
+			<input type="submit" value="등록">
 		</p>
-		Password : <input type="password" name="password"
-			value="${param.password}">
-		<p>
-			Title : <input type="text" name="title" ${param.title}>
-		</p>
-		<p>Contents</p>
-		<p>
-			<textarea name="content" rows="20" cols="30">${param.content}</textarea>
-		</p>
-		<input type="submit" value="ok">
 	</form>
 
 </body>

@@ -2,6 +2,7 @@ package servlet;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
@@ -37,7 +38,6 @@ public class MessageServlet extends HttpServlet {
 			protected void doGet(HttpServletRequest request, HttpServletResponse response)
 									throws ServletException, IOException {
 						processRequest(request, response);
-						System.out.println("Input Do Get");
 			}
 
 			/**
@@ -47,7 +47,6 @@ public class MessageServlet extends HttpServlet {
 			protected void doPost(HttpServletRequest request, HttpServletResponse response)
 									throws ServletException, IOException {
 						processRequest(request, response);
-						System.out.println("Input Do Post");
 			}
 
 			private void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -57,27 +56,46 @@ public class MessageServlet extends HttpServlet {
 						MessageDAO dao = MessageDAO.getInstance();
 						String uri = request.getRequestURI();
 						System.out.println(uri);
+						//등록 페이지를 위한 JSP 포워딩
 						if(uri.indexOf("input.do")!=-1){
 									System.out.println("input.do");
 									RequestDispatcher requstDispatcher = request.getRequestDispatcher("/MessageInput.jsp");
 									requstDispatcher.forward(request, response);
 									ConnectionProvider.close(conn);
-						}else if(uri.indexOf("list.do")!=-1){
+						}
+						//리스트 페이지를 위한 JSP 포워딩
+						else if(uri.indexOf("list.do")!=-1){
 									System.out.println("list.do");
 									ArrayList<MessageDTO> msgList = dao.select_AllList(conn);
 									request.setAttribute("list", msgList);
 									RequestDispatcher requstDispatcher = request.getRequestDispatcher("/MessageList.jsp");
 									requstDispatcher.forward(request, response);
 									ConnectionProvider.close(conn);
-						}else if(uri.indexOf("complete.do")!=-1){
+						}
+						//등록 동작을 수행후 list페이지로 포워딩
+						else if(uri.indexOf("insert.do")!=-1){
 									String user = request.getParameter("user");
 									String password = request.getParameter("password");
 									String title = request.getParameter("title");
 									String contents = request.getParameter("contents");
 									MessageDTO msg = new MessageDTO(user, password, title, contents);
 									dao.insert(conn, msg);
-									RequestDispatcher requstDispatcher = request.getRequestDispatcher("/MessageList.jsp");
+									RequestDispatcher requstDispatcher = request.getRequestDispatcher("list.do");
 									requstDispatcher.forward(request, response);
+									ConnectionProvider.close(conn);
+						}
+						//내용 페이지를 위한 JSP 포워딩
+						else if(uri.indexOf("content.do")!=-1){
+									String msgId = request.getParameter("id");
+									try {
+												MessageDTO msg = dao.select_ById(conn,Integer.parseInt(msgId));
+												request.setAttribute("msg", msg);
+												RequestDispatcher requstDispatcher = request.getRequestDispatcher("/MessageContent.jsp");
+												requstDispatcher.forward(request, response);
+									} catch (NumberFormatException e) {
+												e.printStackTrace();
+									} 
+									ConnectionProvider.close(conn);
 						}
 						else{
 									

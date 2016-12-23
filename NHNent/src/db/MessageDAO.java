@@ -61,7 +61,7 @@ public class MessageDAO {
 															+DBKeyword.Table_GuestBook
 															+" order by "
 															+DBKeyword.Column_Time
-															+" asc ";
+															+" desc ";
 									stmt = conn.createStatement();
 									rs = stmt.executeQuery(sql);
 									if(rs.next()){
@@ -84,7 +84,7 @@ public class MessageDAO {
 						}
 						return null;
 			}
-			public MessageDTO select_ById(Connection conn, int msgId) throws SQLException{
+			public MessageDTO select_ById(Connection conn, int msgId){
 						PreparedStatement pstmt = null;
 						ResultSet rs = null;
 						try{
@@ -92,19 +92,25 @@ public class MessageDAO {
 															+DBKeyword.Table_GuestBook
 															+" where "
 															+DBKeyword.Column_Id+" = ? ";
-									pstmt = conn.prepareStatement(sql);
-									pstmt.setInt(1, msgId);
-									rs = pstmt.executeQuery();
-									if(rs.next()){
-												return makeMessage(rs);
-									}else{
-												return null;
+									try {
+												pstmt = conn.prepareStatement(sql);
+												pstmt.setInt(1, msgId);
+												rs = pstmt.executeQuery();
+												if(rs.next()){
+															return makeMessage(rs);
+												}else{
+															return null;
+												}
+									} catch (SQLException e) {
+												// TODO Auto-generated catch block
+												e.printStackTrace();
 									}
 						}
 						finally {
 									DBUtil.close(pstmt);
 									DBUtil.close(rs);
 						}
+						return null;
 			}
 			public void update(Connection conn, MessageDTO msg) throws SQLException{
 						PreparedStatement pstmt = null;
