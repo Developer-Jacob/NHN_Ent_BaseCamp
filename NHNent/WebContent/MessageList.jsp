@@ -23,8 +23,8 @@
 					for(MessageDTO dto : list){
 		%>
 		<tr align="center">
-			<td><%=dto.getId() %></td>
-			<td ><a href="content.do?id=<%=dto.getId()%>"> <%=dto.getTitle() %></a></td>
+			<td><%=dto.getIdx() %></td>
+			<td ><a href="content.do?idx=<%=dto.getIdx()%>"> <%=dto.getTitle() %></a></td>
 			<td><%=dto.getUser()%></td>
 			<td><%=dto.getTime()%></td>
 		</tr>

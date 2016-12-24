@@ -2,7 +2,7 @@ package model;
 
 //DB 테이블에 값 전소을 위한 클래스
 public class MessageDTO {
-			private int id;
+			private int idx;
 			private String user;
 			private String password;
 			private String title;
@@ -18,9 +18,8 @@ public class MessageDTO {
 			}
 			
 
-			public MessageDTO(int id, String user, String password, String title, String contents, String time) {
-						super();
-						this.id = id;
+			public MessageDTO(int idx, String user, String password, String title, String contents, String time) {
+						this.idx = idx;
 						this.user = user;
 						this.password = password;
 						this.title = title;
@@ -45,13 +44,16 @@ public class MessageDTO {
 						this.time = time;
 			}
 
-			public int getId() {
-						return id;
+
+			public int getIdx() {
+						return idx;
 			}
 
-			public void setId(int id) {
-						this.id = id;
+
+			public void setIdx(int idx) {
+						this.idx = idx;
 			}
+
 
 			public String getUser() {
 						return user;

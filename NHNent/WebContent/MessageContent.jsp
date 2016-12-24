@@ -4,11 +4,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<script type="text/javascript">
-	function checkPsw() {
-		
-	}
-</script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 </head>
@@ -22,7 +17,7 @@
 		</tr>
 		<tr align="center">
 			<td>글번호</td>
-			<td><%=msg.getId() %></td>
+			<td><%=msg.getIdx() %></td>
 		</tr>
 		<tr align="center">
 			<td>이름</td>
@@ -40,12 +35,11 @@
 			<td colspan="2"><%=msg.getContents() %></td>
 		</tr>
 	</table>
-	<table width="500" >
+	<table >
 		<tr>
-			<td><input type = "button" value="수정" onclick="javascript:checkPsw();'"></td>
-			<td><input type = "button" value="삭제" onclick="javascript:checkPsw();'"></td>
-			<td><input placeholder="비밀번호를 입력하세요." style="width: 97%; height: 100%" 
-				type="button" name="title" value="${param.password}"></td>
+			<td><input type = "button" value="수정" onclick="location.href='modifyForm.do?idx=<%=msg.getIdx() %>'"></td>
+			<td><input type = "button" value="삭제" onclick="location.href='update.do'"></td>
+			<td ><input type = "button" value="목록" onclick="location.href='list.do'"></td>
 		</tr>
 	</table>
 </body>

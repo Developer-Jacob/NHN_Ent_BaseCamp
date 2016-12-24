@@ -91,7 +91,7 @@ public class MessageDAO {
 									String sql = " select * from "
 															+DBKeyword.Table_GuestBook
 															+" where "
-															+DBKeyword.Column_Id+" = ? ";
+															+DBKeyword.Column_Idx+" = ? ";
 									try {
 												pstmt = conn.prepareStatement(sql);
 												pstmt.setInt(1, msgId);
@@ -112,24 +112,33 @@ public class MessageDAO {
 						}
 						return null;
 			}
-			public void update(Connection conn, MessageDTO msg) throws SQLException{
+			public void update(Connection conn, int idx, String title, String content){
 						PreparedStatement pstmt = null;
 						try{
 									String sql = " update "
 															+DBKeyword.Table_GuestBook
 															+" set "
+															+DBKeyword.Column_Title
+															+" = ? , "
 															+DBKeyword.Column_Content
-															+" = ? "
+															+" = ? , "
 															+DBKeyword.Column_Time
 															+" = ? "
 															+" where "
-															+DBKeyword.Column_Id
+															+DBKeyword.Column_Idx
 															+" = ? ";
-									pstmt = conn.prepareStatement(sql);
-									pstmt.setString(1, msg.getContents());
-									pstmt.setString(2, DBUtil.getTime());
-									pstmt.setInt(3, msg.getId());
-									pstmt.executeUpdate();
+									try {
+												pstmt = conn.prepareStatement(sql);
+												pstmt.setString(1, title);
+												pstmt.setString(2, content);
+												pstmt.setString(3, DBUtil.getTime());
+												pstmt.setInt(4, idx);
+												pstmt.executeUpdate();
+									} catch (SQLException e) {
+												// TODO Auto-generated catch block
+												e.printStackTrace();
+									}
+									
 						}finally {
 									DBUtil.close(pstmt);
 						}
@@ -140,7 +149,7 @@ public class MessageDAO {
 									String sql = " delete from "
 															+DBKeyword.Table_GuestBook
 															+" where "
-															+DBKeyword.Column_Id+" = ? ";
+															+DBKeyword.Column_Idx+" = ? ";
 									pstmt = conn.prepareStatement(sql);
 									pstmt.setInt(1, msgId);
 									pstmt.executeUpdate();
@@ -151,7 +160,7 @@ public class MessageDAO {
 			public MessageDTO makeMessage(ResultSet rs) throws SQLException{
 						
 						String title = rs.getString(DBKeyword.Column_Title);
-						int id =rs.getInt(DBKeyword.Column_Id);
+						int id =rs.getInt(DBKeyword.Column_Idx);
 						String user = rs.getString(DBKeyword.Column_User);
 						String content = rs.getString(DBKeyword.Column_Content);
 						String password = rs.getString(DBKeyword.Column_Password);
