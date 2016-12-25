@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -28,7 +29,6 @@ public class MessageServlet extends HttpServlet {
 			 */
 			public MessageServlet() {
 						super();
-						// TODO Auto-generated constructor stub
 			}
 
 			/**
@@ -48,7 +48,11 @@ public class MessageServlet extends HttpServlet {
 									throws ServletException, IOException {
 						processRequest(request, response);
 			}
-
+			private boolean emailCheck(String userMail){
+						boolean flag = false;
+						return false;
+//						return Pattern.matches("/^(\w+)@(\w+)[.](\w+)$/ig", userMail);
+			}
 			private void processRequest(HttpServletRequest request, HttpServletResponse response)
 									throws ServletException, IOException {
 						request.setCharacterEncoding("UTF-8");
@@ -75,6 +79,9 @@ public class MessageServlet extends HttpServlet {
 						// 등록 동작을 수행후 list페이지로 포워딩
 						else if (uri.indexOf("insert.do") != -1) {
 									String user = request.getParameter("user");
+									if(emailCheck(user)){
+												//여기다가 익셉션처리 해줘야됨
+									}
 									String password = request.getParameter("password");
 									String title = request.getParameter("title");
 									String contents = request.getParameter("content");
@@ -106,7 +113,6 @@ public class MessageServlet extends HttpServlet {
 									requstDispatcher.forward(request, response);
 									ConnectionProvider.close(conn);
 						} else if (uri.indexOf("update.do") != -1) {
-									System.out.println("update.do");
 									try {
 												int idx = Integer.parseInt(request.getParameter("idx"));
 												String title = request.getParameter("title");
@@ -120,7 +126,13 @@ public class MessageServlet extends HttpServlet {
 												e.printStackTrace();
 									}
 									ConnectionProvider.close(conn);
-						} else {
+						} else if(uri.indexOf("delete.do")!=-1){
+									int idx = Integer.parseInt(request.getParameter("idx"));
+									dao.delete(conn, idx);
+									RequestDispatcher requstDispatcher = request.getRequestDispatcher("list.do");
+									requstDispatcher.forward(request, response);
+						}
+						else {
 
 						}
 

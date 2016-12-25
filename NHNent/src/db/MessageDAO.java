@@ -143,16 +143,21 @@ public class MessageDAO {
 									DBUtil.close(pstmt);
 						}
 			}
-			public void delete(Connection conn, int msgId) throws SQLException{
+			public void delete(Connection conn, int msgId) {
 						PreparedStatement pstmt = null;
 						try{
 									String sql = " delete from "
 															+DBKeyword.Table_GuestBook
 															+" where "
 															+DBKeyword.Column_Idx+" = ? ";
-									pstmt = conn.prepareStatement(sql);
-									pstmt.setInt(1, msgId);
-									pstmt.executeUpdate();
+									try {
+												pstmt = conn.prepareStatement(sql);
+												pstmt.setInt(1, msgId);
+												pstmt.executeUpdate();
+									} catch (SQLException e) {
+												// TODO Auto-generated catch block
+												e.printStackTrace();
+									}
 						}finally {
 									DBUtil.close(pstmt);
 						}
