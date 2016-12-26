@@ -17,6 +17,7 @@
 			<td >작성자</td>
 			<td >시간</td>
 		</tr>
+		
 		<%
 		ArrayList<MessageDTO> list = (ArrayList<MessageDTO>)request.getAttribute("list");
 		if(list!=null){

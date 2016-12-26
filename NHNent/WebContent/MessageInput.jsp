@@ -50,21 +50,21 @@
 			<tr align="center">
 				<td>이메일주소</td>
 				<td><input style="width: 97%; height: 100%" type="text"
-					name="user" value="${param.user}"></td>
+					name="user" ></td>
 			</tr>
 			<tr align="center">
 				<td>비밀번호</td>
 				<td><input style="width: 97%; height: 100%" type="password"
-					name="password" value="${param.password}"></td>
+					name="password" ></td>
 			</tr>
 			<tr align="center"> 
 				<td>제목</td>
 				<td><input style="width: 97%; height: 100%;" type="text"
-					name="title" value="${param.title}"></td>
+					name="title" ></td>
 			</tr>
 			<tr align="center">
 				<td height="300" colspan="2"><textarea
-						style="width: 98%; height: 100%" name="content">${param.content}</textarea></td>
+						style="width: 98%; height: 100%" name="content"></textarea></td>
 			</tr>
 		</table>
 		<p>

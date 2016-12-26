@@ -6,24 +6,24 @@ public class MessageDTO {
 			private String user;
 			private String password;
 			private String title;
-			private String contents;
+			private String content;
 			private String time;
 			
 			
-			public MessageDTO(String user, String password, String title, String contents) {
+			public MessageDTO(String user, String password, String title, String content) {
 						this.user = user;
 						this.password = password;
 						this.title = title;
-						this.contents = contents;
+						this.content = content;
 			}
 			
 
-			public MessageDTO(int idx, String user, String password, String title, String contents, String time) {
+			public MessageDTO(int idx, String user, String password, String title, String content, String time) {
 						this.idx = idx;
 						this.user = user;
 						this.password = password;
 						this.title = title;
-						this.contents = contents;
+						this.content = content;
 						this.time = time;
 			}
 
@@ -71,12 +71,12 @@ public class MessageDTO {
 						this.password = password;
 			}
 
-			public String getContents() {
-						return contents;
+			public String getContent() {
+						return content;
 			}
 
-			public void setContents(String contents) {
-						this.contents = contents;
+			public void setContent(String content) {
+						this.content = content;
 			}
 
 }

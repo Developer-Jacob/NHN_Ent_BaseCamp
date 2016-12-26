@@ -10,7 +10,7 @@
 		if(psw != inputPsw){
 			alert("비밀번호가 틀렸습니다.")
 		}else{
-			location.replace("list.do");
+			location.replace("delete.do");
 			alert("삭제 됐습니다.");
 		}
 	}
@@ -19,40 +19,36 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<%
-				MessageDTO msg = (MessageDTO) request.getAttribute("msg");
-	%>
 	<table border="5" width="500">
 		<tr align="center">
 			<td colspan="2">내용</td>
 		</tr>
 		<tr align="center">
 			<td>글번호</td>
-			<td><%=msg.getIdx()%></td>
+			<td>${msg.idx}</td>
 		</tr>
 		<tr align="center">
 			<td>이름</td>
-			<td><%=msg.getUser()%></td>
+			<td>${msg.user}</td>
 		</tr>
 		<tr align="center">
 			<td>작성일</td>
-			<td><%=msg.getTime()%></td>
+			<td>${msg.time}</td>
 		</tr>
 		<tr align="center">
 			<td>제목</td>
-			<td><%=msg.getTitle()%></td>
+			<td>${msg.title}</td>
 		</tr>
 		<tr align="center" height="300">
-			<td colspan="2"><%=msg.getContents()%></td>
+			<td colspan="2">${msg.content} </td>
 		</tr>
 	</table>
 	<table>
 		<tr>
 			<td><input type="button" value="수정"
-				onclick="location.href='modifyForm.do?idx=<%=msg.getIdx()%>'"></td>
-			<td><input type="button" value="삭제" onclick="deleteMessage('<%=msg.getIdx()%>,<%=msg.getPassword()%>')"></td>
-			<td><input type="button" value="목록"
-				onclick="location.href='list.do'"></td>
+				onclick="location.href='modifyForm.do?idx=${msg.idx}'"></td>
+			<td><input type="button" value="삭제" onclick="deleteMessage('${msg.idx},${msg.password}')"></td>
+			<td><input type="button" value="목록" onclick="location.replace('list.do')"></td>
 		</tr>
 	</table>
 </body>

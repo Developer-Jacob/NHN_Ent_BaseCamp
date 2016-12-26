@@ -69,10 +69,10 @@ public class MessageServlet extends HttpServlet {
 						}
 						// 리스트 페이지를 위한 JSP 포워딩
 						else if (uri.indexOf("list.do") != -1) {
+									
 									ArrayList<MessageDTO> msgList = dao.select_AllList(conn);
 									request.setAttribute("list", msgList);
-									RequestDispatcher requstDispatcher = request
-															.getRequestDispatcher("/MessageList.jsp");
+									RequestDispatcher requstDispatcher = request.getRequestDispatcher("/MessageList.jsp");
 									requstDispatcher.forward(request, response);
 									ConnectionProvider.close(conn);
 						}
@@ -87,8 +87,7 @@ public class MessageServlet extends HttpServlet {
 									String contents = request.getParameter("content");
 									MessageDTO msg = new MessageDTO(user, password, title, contents);
 									dao.insert(conn, msg);
-									RequestDispatcher requstDispatcher = request.getRequestDispatcher("list.do");
-									requstDispatcher.forward(request, response);
+									response.sendRedirect("list.do");
 									ConnectionProvider.close(conn);
 						}
 						// 내용 페이지를 위한 JSP 포워딩
@@ -122,6 +121,7 @@ public class MessageServlet extends HttpServlet {
 												request.setAttribute("msg", msg);
 												RequestDispatcher requstDispatcher = request.getRequestDispatcher("/MessageContent.jsp");
 												requstDispatcher.forward(request, response);
+												ConnectionProvider.close(conn);
 									} catch (NumberFormatException e) {
 												e.printStackTrace();
 									}
@@ -131,6 +131,7 @@ public class MessageServlet extends HttpServlet {
 									dao.delete(conn, idx);
 									RequestDispatcher requstDispatcher = request.getRequestDispatcher("list.do");
 									requstDispatcher.forward(request, response);
+									ConnectionProvider.close(conn);
 						}
 						else {
 

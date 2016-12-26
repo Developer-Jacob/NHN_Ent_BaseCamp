@@ -39,7 +39,7 @@ public class MessageDAO {
 									//title
 									pstmt.setString(2, msg.getTitle());
 									//content
-									pstmt.setString(3, msg.getContents());
+									pstmt.setString(3, msg.getContent());
 									//time
 									pstmt.setString(4, DBUtil.getTime());
 									//psw
