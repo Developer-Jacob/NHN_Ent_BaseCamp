@@ -22,7 +22,7 @@ public class MessageDAO {
 						return dao;
 			}
 
-			public void insert(Connection conn, MessageDTO msg) {
+			public int insert(Connection conn, MessageDTO msg) {
 						PreparedStatement pstmt = null;
 						
 						try {
@@ -44,7 +44,7 @@ public class MessageDAO {
 									pstmt.setString(4, DBUtil.getTime());
 									//psw
 									pstmt.setString(5, msg.getPassword());
-									pstmt.executeUpdate();
+									return pstmt.executeUpdate();
 						}
 						catch(SQLException e){ 
 									e.printStackTrace();
@@ -52,6 +52,26 @@ public class MessageDAO {
 						finally {
 									DBUtil.close(pstmt);
 						}
+						return 0;
+			}
+			public int select_AllCount(Connection conn){
+						Statement stmt = null;
+						ResultSet rs = null;
+						try{
+									String sql = " select count(*) from "
+															+DBKeyword.Table_GuestBook;
+									stmt = conn.createStatement();
+									rs = stmt.executeQuery(sql);
+									rs.next();
+									return rs.getInt("count");
+						}
+						catch(SQLException e){
+									e.printStackTrace();
+						}finally {
+									DBUtil.close(stmt);
+									DBUtil.close(rs);
+						}
+						return 0;
 			}
 			public ArrayList<MessageDTO> select_AllList(Connection conn){
 						Statement stmt = null;
@@ -84,6 +104,7 @@ public class MessageDAO {
 						}
 						return null;
 			}
+			
 			public MessageDTO select_ById(Connection conn, int msgId){
 						PreparedStatement pstmt = null;
 						ResultSet rs = null;
@@ -143,7 +164,7 @@ public class MessageDAO {
 									DBUtil.close(pstmt);
 						}
 			}
-			public void delete(Connection conn, int msgId) {
+			public int delete(Connection conn, int msgId) {
 						PreparedStatement pstmt = null;
 						try{
 									String sql = " delete from "
@@ -153,7 +174,7 @@ public class MessageDAO {
 									try {
 												pstmt = conn.prepareStatement(sql);
 												pstmt.setInt(1, msgId);
-												pstmt.executeUpdate();
+												return pstmt.executeUpdate();
 									} catch (SQLException e) {
 												// TODO Auto-generated catch block
 												e.printStackTrace();
@@ -161,6 +182,7 @@ public class MessageDAO {
 						}finally {
 									DBUtil.close(pstmt);
 						}
+						return 0;
 			}
 			public MessageDTO makeMessage(ResultSet rs) throws SQLException{
 						
