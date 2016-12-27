@@ -49,10 +49,8 @@ public class MessageServlet extends HttpServlet {
 						processRequest(request, response);
 			}
 			private boolean emailCheck(String userMail){
-						boolean flag = false;
-						return false;
-//						return Pattern.matches("/^(\w+)@(\w+)[.](\w+)$/ig", userMail);
-			}
+						return Pattern.matches("^(\\w+)@(\\w+)[.](\\w+)$", userMail);
+						}
 			private void processRequest(HttpServletRequest request, HttpServletResponse response)
 									throws ServletException, IOException {
 						request.setCharacterEncoding("UTF-8");
@@ -79,15 +77,22 @@ public class MessageServlet extends HttpServlet {
 						// 등록 동작을 수행후 list페이지로 포워딩
 						else if (uri.indexOf("insert.do") != -1) {
 									String user = request.getParameter("user");
-									if(emailCheck(user)){
-												//여기다가 익셉션처리 해줘야됨
-									}
 									String password = request.getParameter("password");
 									String title = request.getParameter("title");
 									String contents = request.getParameter("content");
-									MessageDTO msg = new MessageDTO(user, password, title, contents);
-									dao.insert(conn, msg);
-									response.sendRedirect("list.do");
+									String resultKey ="";
+									if(emailCheck(user)){
+												//여기다가 익셉션처리 해줘야됨
+												MessageDTO msg = new MessageDTO(user, password, title, contents);
+												dao.insert(conn, msg);
+												resultKey = "success";
+									}else{
+												resultKey = "fail";
+									}
+									request.setAttribute("result", resultKey);
+									RequestDispatcher requstDispatcher = request
+															.getRequestDispatcher("/MessageInputResult.jsp");
+									requstDispatcher.forward(request, response);
 									ConnectionProvider.close(conn);
 						}
 						// 내용 페이지를 위한 JSP 포워딩

@@ -11,11 +11,7 @@
 		var password = document.forms[0].password.value;
 		var title = document.forms[0].title.value;
 		var content = document.forms[0].content.value;
-		if (user.match(/^(\w+)@(\w+)[.](\w+)$/ig) == null) {
-			alert('이메일 형식(아이디@도메인.com)으로 입력하세요');
-			document.forms[0].user.focus();
-			return false;
-		}
+	
 		if (user == null || user == "") {
 			alert("이메일을 입력하세요.");
 			document.forms[0].user.focus();
@@ -36,7 +32,6 @@
 			document.forms[0].user.focus();
 			return false;
 		}
-		alert("저장 되었습니다.");
 	}
 </script>
 <title>Input Form</title>

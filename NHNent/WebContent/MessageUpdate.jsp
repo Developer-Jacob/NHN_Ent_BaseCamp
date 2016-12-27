@@ -40,9 +40,6 @@
 <title>Update page</title>
 </head>
 <body>
-	<%
-				MessageDTO msg = (MessageDTO) request.getAttribute("msg");
-	%>
 	<form action=update.do method="post" onsubmit="return check('${msg.password}');">
 	<input type="hidden" name="idx" value=${msg.idx} >
 		<table border="5" width="500">
