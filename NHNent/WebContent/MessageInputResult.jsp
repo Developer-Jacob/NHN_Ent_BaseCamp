@@ -6,10 +6,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <script type="text/javascript">
-		var aa =<%=request.getAttribute("result")%>;
-		document.write(typeof aa);
-		if(aa == 'success'){
-			alert("등록 되었습니다.");
+		if('${result}'==success){
+			alert("등록되었습니다.");
 		}else{
 			alert("등록에 실패했습니다.");
 		}
