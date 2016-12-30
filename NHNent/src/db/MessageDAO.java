@@ -133,7 +133,7 @@ public class MessageDAO {
 						}
 						return null;
 			}
-			public void update(Connection conn, int idx, String title, String content){
+			public int update(Connection conn, int idx, String title, String content){
 						PreparedStatement pstmt = null;
 						try{
 									String sql = " update "
@@ -154,7 +154,7 @@ public class MessageDAO {
 												pstmt.setString(2, content);
 												pstmt.setString(3, DBUtil.getTime());
 												pstmt.setInt(4, idx);
-												pstmt.executeUpdate();
+												return pstmt.executeUpdate();
 									} catch (SQLException e) {
 												// TODO Auto-generated catch block
 												e.printStackTrace();
@@ -163,6 +163,7 @@ public class MessageDAO {
 						}finally {
 									DBUtil.close(pstmt);
 						}
+						return 0;
 			}
 			public int delete(Connection conn, int msgId) {
 						PreparedStatement pstmt = null;

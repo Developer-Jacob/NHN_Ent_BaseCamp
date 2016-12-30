@@ -48,13 +48,22 @@ public class MessageDAOTest {
 						ConnectionProvider.close(conn);
 			}
 			
-			
+			@Test
+			public void testSelect_ById() {
+						MessageDAO dao = MessageDAO.getInstance();
+						Connection conn = ConnectionProvider.getConnection();
+						MessageDTO msg = dao.select_ById(conn, idx);
+						assertNotNull(msg);
+						ConnectionProvider.close(conn);
+						
+			}
 			
 			@Test
 			public void testUpdate() {
 						MessageDAO dao = MessageDAO.getInstance();
 						Connection conn = ConnectionProvider.getConnection();
-//						assertEquals(1, dao.update(conn, msg));
+						MessageDTO msg = dao.select_ById(conn, idx);
+						assertEquals(1, dao.update(conn, idx, "title","content"));
 						ConnectionProvider.close(conn);
 			}
 
@@ -62,16 +71,13 @@ public class MessageDAOTest {
 			public void testDelete() {
 						MessageDAO dao = MessageDAO.getInstance();
 						Connection conn = ConnectionProvider.getConnection();
-						MessageDTO msg = new MessageDTO("testUser@nhnent.com", "test", "testTitle", "testContent");
-//						assertEquals(1, dao.delete(conn, msgId));
+						assertEquals(1, dao.delete(conn, idx));
 						ConnectionProvider.close(conn);
 			}
 			
 			
 
-			@Test
-			public void testSelect_ById() {
-			}
+			
 
 			@Test
 			public void testMakeMessage() {
